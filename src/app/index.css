@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    height: 100vh;
+    /* width: 100%; */
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('https://cdn.pixabay.com/photo/2022/03/01/02/51/galaxy-7040416_1280.png');
+}
