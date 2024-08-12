@@ -1,9 +1,9 @@
 import { http, cookieStorage, createConfig, createStorage } from "wagmi";
-import { mainnet, sepolia, base } from "wagmi/chains";
+import { mainnet, sepolia, base, polygonAmoy } from "wagmi/chains";
 import {
   metaMask,
 } from "wagmi/connectors";
-import { polygonAmoy } from "./chains";
+// import { polygonAmoy } from "./chains";
 
 const projectId = "9211cd59958f85a6b25688482536e012";
 
@@ -24,6 +24,9 @@ export function getConfig() {
     ssr: true,
     transports: {
       [polygonAmoy.id]: http(),
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+      [base.id]: http(),
     },
   });
 }
