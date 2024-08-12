@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AbiCoder } from "ethers";
 import axios from "axios";
 
 import "./transactionForm.css";
@@ -8,7 +7,7 @@ function TransactionForm() {
   const [recipient, setRecipient] = useState<string>("");
   const [data, setData] = useState<string>("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     try {
       const response = await axios.post(
         "http://localhost:5000/send-transaction",

@@ -10,14 +10,14 @@ function WalletConnect() {
   const chainId = useChainId();
   const { disconnect } = useDisconnect();
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (): void => {
     if (address) {
       navigator.clipboard.writeText(address);
       alert("Address copied to clipboard!");
     }
   };
 
-  const handleConnect = async () => {
+  const handleConnect = async (): Promise<void> => {
     try {
       await connect({ connector: connectors[0], chainId });
     } catch (error) {
