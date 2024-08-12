@@ -16,7 +16,7 @@ function TransactionForm() {
           customData: data,
         }
       );
-      alert(`Transaction Hash: ${response.data.transactionHash}`);
+      alert(`Transaction Hash: ${response.data.txHash}`);
     } catch (error) {
       console.error("Error sending transaction:", error);
     }
