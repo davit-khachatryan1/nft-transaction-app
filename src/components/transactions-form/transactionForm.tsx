@@ -1,38 +1,45 @@
-import { useState } from "react";
-import axios from "axios";
-import Loader from "../loader/loader";
+import React, { useState } from 'react';
+import axios from 'axios';
+import Loader from '../loader/loader';
+import Modal from '../modal/modal';
 
-import "./transactionForm.css";
+import './transactionForm.css'
 
 function TransactionForm() {
-  const [recipient, setRecipient] = useState<string>("");
-  const [data, setData] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>('');
+  const [data, setData] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<string>('');
 
   const handleSubmit = async (): Promise<void> => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_BASE_URL}/send-transaction`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/send-transaction`,
         {
           recipient,
           customData: data,
         }
       );
-      alert(`Transaction Hash: ${response.data.txHash}`);
+      setModalMessage(`Transaction Hash: ${response.data.txHash}`);
     } catch (error) {
-      console.error("Error sending transaction:", error);
+      setModalMessage('Error sending transaction: ' + (error as Error).message);
     } finally {
       setLoading(false);
+      setModalOpen(true);
     }
   };
 
   return (
     <div className="transaction-wrapper">
-        {loading && <Loader />}
+      {loading && <Loader />}
       <div className="transaction-box">
         <h2>Send Transaction</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}>
           <div className="user-box">
             <input
               type="text"
@@ -51,11 +58,14 @@ function TransactionForm() {
             />
             <label>Custom Data</label>
           </div>
-          <a href="#" onClick={handleSubmit}>
-            Send!!
-          </a>
+          <button type="submit">Send!!</button>
         </form>
       </div>
+      <Modal
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }
