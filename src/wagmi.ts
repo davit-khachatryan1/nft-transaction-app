@@ -3,7 +3,7 @@ import { mainnet, sepolia, base } from "wagmi/chains";
 import {
   metaMask,
 } from "wagmi/connectors";
-import { polygonAmoy } from "./chains"; // Import the custom chain
+import { polygonAmoy } from "./chains";
 
 const projectId = "9211cd59958f85a6b25688482536e012";
 
@@ -23,10 +23,7 @@ export function getConfig() {
     }),
     ssr: true,
     transports: {
-      // [mainnet.id]: http(),
-      // [sepolia.id]: http(),
-      // [base.id]: http(),
-      [polygonAmoy.id]: http(), // Add transport for Amoy chain
+      [polygonAmoy.id]: http(),
     },
   });
 }

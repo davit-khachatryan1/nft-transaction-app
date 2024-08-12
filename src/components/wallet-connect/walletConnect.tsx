@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useAccount, useChainId, useConnect, useDisconnect } from "wagmi";
+import React from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { FaRegCopy } from "react-icons/fa";
 
 import "./walletConnect.css";
@@ -7,7 +7,6 @@ import "./walletConnect.css";
 function WalletConnect() {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
-  // const chainId = useChainId();
   const { disconnect } = useDisconnect();
 
   const copyToClipboard = (): void => {

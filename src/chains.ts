@@ -1,5 +1,5 @@
 export const polygonAmoy = {
-  id: 80001, // Replace with the correct Chain ID for Polygon Amoy if needed
+  id: 80001,
   name: "Polygon Amoy Testnet",
   network: "polygonAmoy",
   nativeCurrency: {
@@ -9,14 +9,14 @@ export const polygonAmoy = {
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc-amoy.polygon.network"], // Replace with the correct RPC URL for Amoy
+      http: ["https://rpc-amoy.polygon.network"],
     },
     public: {
-      http: ["https://rpc-amoy.polygon.network"], // Replace with the correct RPC URL for Amoy
+      http: ["https://rpc-amoy.polygon.network"],
     },
   },
   blockExplorers: {
-    default: { name: "Polygonscan", url: "https://polygonscan.com" }, // Adjust URL for Amoy if available
+    default: { name: "Polygonscan", url: "https://polygonscan.com" },
   },
   testnet: true,
 };
