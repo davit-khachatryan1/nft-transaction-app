@@ -1,4 +1,5 @@
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import React, { useState } from "react";
+import { useAccount, useChainId, useConnect, useDisconnect } from "wagmi";
 import { FaRegCopy } from "react-icons/fa";
 
 import "./walletConnect.css";
@@ -6,6 +7,7 @@ import "./walletConnect.css";
 function WalletConnect() {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
+  const chainId = useChainId();
   const { disconnect } = useDisconnect();
 
   const copyToClipboard = () => {
@@ -14,16 +16,26 @@ function WalletConnect() {
       alert("Address copied to clipboard!");
     }
   };
+
+  const handleConnect = async () => {
+    try {
+      await connect({ connector: connectors[0], chainId });
+    } catch (error) {
+      console.error("Error connecting to MetaMask:", error);
+      alert("There was an error connecting to MetaMask. Please try again.");
+    }
+  };
+
   return (
     <div className="wallet-connec-container">
       <div className="box">
         {isConnected ? (
           <>
             <button className="disconnect-button" onClick={() => disconnect()}>
-              <span className="address"> {address}</span>
+              <span className="address">{address}</span>
               <FaRegCopy
                 className="copy-icon"
-                onClick={(e: any) => {
+                onClick={(e) => {
                   e.stopPropagation();
                   copyToClipboard();
                 }}
@@ -32,10 +44,7 @@ function WalletConnect() {
             </button>
           </>
         ) : (
-          <button
-            className="connect-button"
-            onClick={() => connect({ connector: connectors[0] })}
-          >
+          <button className="connect-button" onClick={handleConnect}>
             Connect Wallet
           </button>
         )}

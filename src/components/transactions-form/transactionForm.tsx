@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AbiCoder } from "ethers";
 import axios from "axios";
 
 import "./transactionForm.css";
@@ -9,10 +10,13 @@ function TransactionForm() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("/api/send-transaction", {
-        recipient,
-        data,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/send-transaction",
+        {
+          recipient,
+          customData: data,
+        }
+      );
       alert(`Transaction Hash: ${response.data.transactionHash}`);
     } catch (error) {
       console.error("Error sending transaction:", error);

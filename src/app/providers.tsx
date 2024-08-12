@@ -6,12 +6,14 @@ import { type State, WagmiProvider } from 'wagmi'
 
 import { getConfig } from '@/wagmi'
 
+const queryClient = new QueryClient();
+
 export function Providers(props: {
   children: ReactNode
   initialState?: State
 }) {
   const [config] = useState(() => getConfig())
-  const [queryClient] = useState(() => new QueryClient())
+  // const [queryClient] = useState(() => new QueryClient())
 
   return (
     <WagmiProvider config={config} initialState={props.initialState}>

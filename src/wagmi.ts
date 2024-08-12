@@ -1,14 +1,27 @@
-import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+import { http, cookieStorage, createConfig, createStorage } from "wagmi";
+import { base, mainnet, sepolia } from "wagmi/chains";
+import {
+  coinbaseWallet,
+  injected,
+  metaMask,
+  walletConnect,
+} from "wagmi/connectors";
+
+const projectId = "9211cd59958f85a6b25688482536e012";
 
 export function getConfig() {
   return createConfig({
-    chains: [mainnet, sepolia],
+    chains: [mainnet, sepolia, base],
     connectors: [
+      metaMask({
+        dappMetadata: {
+          name: "Nft transaction app", 
+          url: "https://nft-transaction-app.vercel.app/", 
+        },
+      }),
       injected(),
       coinbaseWallet(),
-      walletConnect({ projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID || '9211cd59958f85a6b25688482536e012'}),
+      walletConnect({ projectId }),
     ],
     storage: createStorage({
       storage: cookieStorage,
@@ -17,12 +30,13 @@ export function getConfig() {
     transports: {
       [mainnet.id]: http(),
       [sepolia.id]: http(),
+      [base.id]: http(),
     },
-  })
+  });
 }
 
-declare module 'wagmi' {
+declare module "wagmi" {
   interface Register {
-    config: ReturnType<typeof getConfig>
+    config: ReturnType<typeof getConfig>;
   }
 }
