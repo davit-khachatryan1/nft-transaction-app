@@ -1,16 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
+import Loader from "../loader/loader";
 
 import "./transactionForm.css";
 
 function TransactionForm() {
   const [recipient, setRecipient] = useState<string>("");
   const [data, setData] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (): Promise<void> => {
+    setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/send-transaction",
+        `${process.env.NEXT_BASE_URL}/send-transaction`,
         {
           recipient,
           customData: data,
@@ -19,11 +22,14 @@ function TransactionForm() {
       alert(`Transaction Hash: ${response.data.txHash}`);
     } catch (error) {
       console.error("Error sending transaction:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="transaction-wrapper">
+        {loading && <Loader />}
       <div className="transaction-box">
         <h2>Send Transaction</h2>
         <form onSubmit={handleSubmit}>
