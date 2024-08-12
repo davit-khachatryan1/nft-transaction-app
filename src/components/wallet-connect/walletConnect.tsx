@@ -7,7 +7,7 @@ import "./walletConnect.css";
 function WalletConnect() {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
-  const chainId = useChainId();
+  // const chainId = useChainId();
   const { disconnect } = useDisconnect();
 
   const copyToClipboard = (): void => {
@@ -19,7 +19,7 @@ function WalletConnect() {
 
   const handleConnect = async (): Promise<void> => {
     try {
-      await connect({ connector: connectors[0], chainId });
+      await connect({ connector: connectors[0] });
     } catch (error) {
       console.error("Error connecting to MetaMask:", error);
       alert("There was an error connecting to MetaMask. Please try again.");
